@@ -36,7 +36,6 @@ androidx-paging-compose = "3.2.1"
 androidx-activity-compose = "1.9.0"
 serialization = "1.7.2"
 navigationCompose = "2.8.5"
-uiDesktop = "1.7.0"
 coreSplashscreen = "1.0.1"
 
 
@@ -95,7 +94,6 @@ compose-destinations-ksp = { module = "io.github.raamcosta.compose-destinations:
 compose-destinations-animationes-core = { module = "io.github.raamcosta.compose-destinations:animations-core", version.ref = "compose-destinations" }
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
-androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
 
 [plugins]
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

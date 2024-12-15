@@ -13,12 +13,12 @@ plugins {
 
 android {
     namespace = "com.pradip.weatherTracker"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.pradip.weatherTracker"
-        minSdk = 29
-        targetSdk = 34
+        minSdk = 26
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -41,11 +41,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_19
-        targetCompatibility = JavaVersion.VERSION_19
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "19"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
@@ -54,10 +54,16 @@ android {
 
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            // Exclude specific files causing conflicts
+            excludes += mutableSetOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt"
+            )
         }
         jniLibs {
-            useLegacyPackaging = true // Needed, so Mockk library works under androidTest
+            useLegacyPackaging = true // Needed for Mockk library in androidTest
         }
     }
 
@@ -94,7 +100,6 @@ dependencies {
 
     // Coil
     implementation(libs.coil.compose)
-    implementation(libs.androidx.ui.desktop)
 
     // Compose
     val composeBOM = platform(libs.androidx.compose.bom)

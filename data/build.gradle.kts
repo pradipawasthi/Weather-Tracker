@@ -15,10 +15,10 @@ val secretsProperties = Properties().apply {
 
 android {
     namespace = "com.pradip.data"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = 29
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
