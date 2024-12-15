@@ -2,6 +2,7 @@ package com.pradip.weatherTracker.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pradip.data.local.LocalPreferences
 import com.pradip.domain.Resource
 import com.pradip.domain.models.WeatherDataModel
 import com.pradip.domain.repository.WeatherRepository
@@ -12,12 +13,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepository
+    private val weatherRepository: WeatherRepository,
+    private val localPreferences: LocalPreferences
 ) : ViewModel() {
 
     private val _weatherState = MutableStateFlow<WeatherUiState?>(null)
@@ -28,6 +32,12 @@ class WeatherViewModel @Inject constructor(
 
     fun setQuery(value: String) {
         _query.value = value
+    }
+    init {
+    viewModelScope.launch {
+        _query.emitAll(localPreferences.readCity.filterNotNull())
+    }
+
     }
 
     @OptIn(FlowPreview::class)
@@ -45,6 +55,9 @@ class WeatherViewModel @Inject constructor(
                                 }
                                 is Resource.Success -> {
                                     _weatherState.value = WeatherUiState.Success(resource.data)
+                                   if (resource.data?.location?.name != null){
+                                       localPreferences.saveCity(resource.data!!.location.name)
+                                   }
                                 }
                                 is Resource.Error -> {
                                     _weatherState.value =

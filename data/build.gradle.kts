@@ -6,6 +6,10 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.kotlin.kapt)
+
+
 }
 
 val secretsPropertiesFile: File = project.file("secrets.properties")
@@ -78,6 +82,11 @@ dependencies {
     api(libs.androidx.room.ktx)
     api(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
+
+    // DI
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
 
     // Test
     testImplementation(libs.junit)
