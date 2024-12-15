@@ -52,8 +52,6 @@ fun SearchResultCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
-            // City and Temperature
             Column {
                 Text(
                     text = city.location.name,

@@ -84,8 +84,6 @@ fun WeatherDetailsSection(city: WeatherDataModel) {
         )
 
         Spacer(modifier = Modifier.height(24.dp))
-
-        // Weather Stats
         WeatherStatsCard(city)
     }
 }

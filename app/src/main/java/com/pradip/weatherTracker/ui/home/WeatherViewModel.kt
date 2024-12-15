@@ -44,10 +44,10 @@ class WeatherViewModel @Inject constructor(
     fun fetchWeather() {
         viewModelScope.launch {
             _query
-                .debounce(if (!_query.value.isNullOrBlank()) 300 else 0)
+                .debounce(if (_query.value.isNotBlank()) 300 else 0)
                 .distinctUntilChanged()
                 .collect { location ->
-                    if (location?.isNotBlank()== true) {
+                    if (location.isNotBlank()) {
                         weatherRepository.getWeather(location).collect { resource ->
                             when (resource) {
                                 is Resource.Loading -> {
@@ -55,9 +55,7 @@ class WeatherViewModel @Inject constructor(
                                 }
                                 is Resource.Success -> {
                                     _weatherState.value = WeatherUiState.Success(resource.data)
-                                   if (resource.data?.location?.name != null){
-                                       localPreferences.saveCity(resource.data!!.location.name)
-                                   }
+                                    localPreferences.saveCity(_query.value)
                                 }
                                 is Resource.Error -> {
                                     _weatherState.value =
